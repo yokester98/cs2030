@@ -1,0 +1,3 @@
+enum E {
+    ARRIVE, SERVE, WAIT, DONE, LEAVE;
+}
