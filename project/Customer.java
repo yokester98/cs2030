@@ -1,13 +1,18 @@
 class Customer {
-    private final double arrivalTime;
     private final int id;
-    private final Event event;
+    private final double time;
 
-    Customer(double arrivalTime, int id, Event event) {
-        this.arrivalTime = arrivalTime;
+    Customer(int id, double time) {
         this.id = id;
-        this.event = event;
+        this.time = time;
     }
 
+    int getID() {
+        return this.id;
+    }
+
+    double getTime() {
+        return this.time;
+    }
 
 }

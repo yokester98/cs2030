@@ -6,13 +6,12 @@ class Main1 {
         Scanner sc = new Scanner(System.in);
 
         int numOfServers = sc.nextInt();
-        Server[] servers = {};
+        Server[] servers = new Server[numOfServers];
         for (int i = 0; i < numOfServers; i++) {
-            
+            servers[i] = new Server(i + 1)
         }
 
-        PriorityQueue<Event> PQ = new PriorityQueue<Event>(new EventComp());
-        
+        PriorityQueue<Event> PQ = new PriorityQueue<>(new EventComp());        
 
         while (sc.hasNextDouble()) {
             double arrivalTime = sc.nextDouble();

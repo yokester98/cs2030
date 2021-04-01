@@ -1,18 +1,21 @@
-class Event {
-    private final E e;
-    private final int custID;
+abstract class Event {
+    private final Customer customer;
     private final double time;
 
-    Event(E e, int custID) {
-        this.e = e;
-        this.custID = custID;
+    public Event(Customer customer, double time) {
+        this.customer = customer;
+        this.time = time;
     }
     
-    int getCustID() {
-        return this.custID;
+    Customer getCustomer() {
+        return this.customer;
     }
 
-    public String toString() {
-    
+    int getCustomerID() {
+        return this.customer.getID();
+    }
+
+    double getTime() {
+        return this.time;
     }
 }
