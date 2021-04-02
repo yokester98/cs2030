@@ -1,17 +1,15 @@
 class LeaveEvent extends Event {
-    private final Customer customer;
-    private final double time;
 
     LeaveEvent(Customer customer, double time) {
         super(customer,time);
     }
 
-    Event nextEvent() {
+    Event nextEvent(Server[] servers) {
         return null;
     }
 
-    void updateStatistics(Statistics statistics) {
-        statistics.increaseNumLeft();
+    Stats updateStats(Stats stats) {
+        return stats.increaseNumLeft();
     }
 
     public String toString() {

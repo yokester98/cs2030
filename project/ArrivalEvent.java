@@ -1,6 +1,4 @@
 class ArrivalEvent extends Event {
-    private final Customer customer;
-    private final double time;
 
     ArrivalEvent(Customer customer, double time) {
         super(customer, time);
@@ -30,21 +28,26 @@ class ArrivalEvent extends Event {
         if (server == null) {
             return doLeaveEvent();
         } else if (server.isNotServingAndWaiting()) {
-            ServedEvent servedEevent = doServedEvent(server);
-            server.setServedEvent(servedEvent);
-            return servedEvent;
+            ServeEvent serveEvent = doServeEvent(server);
+            Server updatedServer = server.setServing(serveEvent);
+            servers[updatedServer.getID() - 1] = updatedServer;
+            serveEvent = doServeEvent(updatedServer);
+            return serveEvent;
         } else if (server.isNotWaiting()) {
             WaitEvent waitEvent = doWaitEvent(server);
-            server.setWaitEvent(waitEvent);
+            Server updatedServer = server.setWaiting(waitEvent);
+            servers[updatedServer.getID() - 1] = updatedServer;
+            waitEvent = doWaitEvent(updatedServer);
             return waitEvent;
         }
+        return null;
     }
 
-    ServedEvent doServedEvent(Server server) {
-        return new ServedEvent(super.getCustomer(), super.getTime(), server);
+    ServeEvent doServeEvent(Server server) {
+        return new ServeEvent(super.getCustomer(), super.getTime(), server);
     }
 
-    WaitEvent doWaitEvent(Server Server) {
+    WaitEvent doWaitEvent(Server server) {
         return new WaitEvent(super.getCustomer(), super.getTime(), server);
     }
 
@@ -52,7 +55,9 @@ class ArrivalEvent extends Event {
         return new LeaveEvent(super.getCustomer(), super.getTime());
     }
 
-    void updateStatistics(Statistics statistics) { }
+    Stats updateStats(Stats stats) {
+        return stats;
+    }
 
     public String toString() {
         return String.format("%.3f %d arrives", super.getTime(), super.getCustomerID());

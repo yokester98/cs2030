@@ -1,20 +1,24 @@
 class Stats {
-    private double waitingTime = 0;
-    private int numServed = 0;
-    private int numLeft = 0;
+    private final double waitingTime;
+    private final int numServed;
+    private final int numLeft;
 
-    Statistics(){ }
-
-    void increaseWaitingTime(double time) {
-        waitingTime += time;
+    Stats(double waitingTime, int numServed, int numLeft){
+        this.waitingTime = waitingTime;
+        this.numServed = numServed;
+        this.numLeft = numLeft;
     }
 
-    void increaseNumServed() {
-        numServed++;
+    Stats increaseWaitingTime(double time) {
+        return new Stats(this.waitingTime + time, this.numServed, this.numLeft);
     }
 
-    void increaseNumLeft() {
-        numLeft++;
+    Stats increaseNumServed() {
+        return new Stats(this.waitingTime, this.numServed + 1, this.numLeft);
+    }
+
+    Stats increaseNumLeft() {
+        return new Stats(this.waitingTime, this.numServed, this.numLeft + 1);
     }
 
     public String toString() {

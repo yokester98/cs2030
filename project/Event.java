@@ -7,6 +7,10 @@ abstract class Event {
         this.time = time;
     }
     
+    abstract Event nextEvent(Server[] servers);
+
+    abstract Stats updateStats(Stats stats);
+
     Customer getCustomer() {
         return this.customer;
     }

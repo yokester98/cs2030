@@ -1,22 +1,25 @@
 class Server {
     private final int id;
-    private final Event serving = null;
-    private final Event waiting = null;
+    private final Event serving;
+    private final Event waiting;
 
-    Server(int id) {
+
+    Server(int id, Event e1, Event e2) {
         this.id = id;
+        this.serving = e1;
+        this.waiting = e2;
     }
 
     int getID() {
         return this.id;
     }
 
-    void setServing(Event event) {
-        this.serving = event;
+    Server setServing(Event event) {
+        return new Server(this.id, event, this.waiting);
     }
 
-    void setWaiting(Event event) {
-        this.waiting = event;
+    Server setWaiting(Event event) {
+        return new Server(this.id, this.serving, event);
     }
 
     boolean isNotServingAndWaiting() {
@@ -24,17 +27,18 @@ class Server {
     }
 
     boolean isNotWaiting() {
-        return (served != null && waiting == null);
+        return (serving != null && waiting == null);
     }
 
-    void updateServing() {
+    Server updateServing() {
+        Server server = this;
         if (serving != null) {
-            serving = null;
+            server = new Server(server.getID(), null, this.waiting);
         }
         if (waiting != null) {
-            serving = waiting;
-            waiting = null;
+            server = new Server(server.getID(), this.waiting, null);
         }
+        return server;
     }
 
     public double getNextTime() {
