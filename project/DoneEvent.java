@@ -1,13 +1,13 @@
 class DoneEvent extends Event {
-    private final Server server;
+    private final int serverID;
 
-    DoneEvent(Customer customer, double time, Server server) {
+    DoneEvent(Customer customer, double time, int serverID) {
         super(customer,time);
-        this.server = server;
+        this.serverID = serverID;
     }
 
     Event nextEvent(Server[] servers) {
-        this.server.updateServing();
+        servers[this.serverID - 1].updateServing();
         return null;
     }
 
@@ -17,6 +17,6 @@ class DoneEvent extends Event {
 
     public String toString() {
         return String.format("%.3f %d done serving by server %d", this.getTime(),
-            super.getCustomerID(), this.server.getID());
+            super.getCustomerID(), this.serverID);
     }
 }

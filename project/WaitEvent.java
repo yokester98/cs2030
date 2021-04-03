@@ -1,16 +1,22 @@
 class WaitEvent extends Event {
-    private final Server server;
+    private final int serverID;
 
-    WaitEvent(Customer customer, double time, Server server) {
+    WaitEvent(Customer customer, double time, int serverID) {
         super(customer,time);
-        this.server = server;
+        this.serverID = serverID;
     }
 
     ServeEvent nextEvent(Server[] servers) {
-        if (!this.server.isNotWaiting()) {
+        if (!servers[this.serverID - 1].isNotWaiting()) {
             ServeEvent serveEvent = new ServeEvent(super.getCustomer(), 
-                this.server.getNextTime(), this.server);
-            this.server.setWaiting(serveEvent);
+                servers[this.serverID - 1].getNextTime(), this.serverID);
+            servers[this.serverID - 1].removeWaiting();
+            int count = servers[this.serverID - 1].getQueue().size();
+            servers[this.serverID - 1].addWaiting(serveEvent);
+            for (int i = 0; i < count; i++) {
+                Event polled = servers[this.serverID - 1].removeWaiting();
+                servers[this.serverID - 1].addWaiting(polled);
+            }
             return serveEvent;
         }
         return null;
@@ -22,6 +28,6 @@ class WaitEvent extends Event {
 
     public String toString() {
         return String.format("%.3f %d waits at server %d", super.getTime(), 
-            super.getCustomerID(), this.server.getID());
+            super.getCustomerID(), this.serverID);
     }
 }

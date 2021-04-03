@@ -8,7 +8,7 @@ class Main1 {
         int numOfServers = sc.nextInt();
         Server[] servers = new Server[numOfServers];
         for (int i = 0; i < numOfServers; i++) {
-            Event[] events = {null, null};
+            Event[] events = new Event[1];
             servers[i] = new Server(i + 1, events);
         }
 
@@ -29,6 +29,8 @@ class Main1 {
             Event event = PQ.poll();
             System.out.println(event.toString());
             event = event.nextEvent(servers);
+            // Server server = servers[0];
+            // System.out.println(server.getQueue().peek());
             if (event != null) {
                 stats = event.updateStats(stats);
                 PQ.add(event);
