@@ -7,12 +7,9 @@ class ServeEvent extends Event {
     }
 
     DoneEvent nextEvent(Server[] servers) {
-        Server updatedServer = servers[this.server.getID() - 1];
         DoneEvent doneEvent = new DoneEvent(super.getCustomer(), 
-            super.getTime() + (double) 1.0, updatedServer);
-        updatedServer = this.server.setServing(doneEvent);
-        servers[updatedServer.getID() - 1] = updatedServer;
-        doneEvent = new DoneEvent(super.getCustomer(), super.getTime() + (double) 1.0, updatedServer);
+            super.getTime() + (double) 1.0, this.server);
+        this.server.setServing(doneEvent);
         return doneEvent;
     }
 

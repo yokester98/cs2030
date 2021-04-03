@@ -8,7 +8,8 @@ class Main1 {
         int numOfServers = sc.nextInt();
         Server[] servers = new Server[numOfServers];
         for (int i = 0; i < numOfServers; i++) {
-            servers[i] = new Server(i + 1, null, null);
+            Event[] events = {null, null};
+            servers[i] = new Server(i + 1, events);
         }
 
         PriorityQueue<Event> PQ = new PriorityQueue<>(new EventComp());        

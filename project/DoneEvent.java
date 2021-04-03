@@ -7,8 +7,7 @@ class DoneEvent extends Event {
     }
 
     Event nextEvent(Server[] servers) {
-        Server updatedServer = this.server.updateServing();
-        servers[updatedServer.getID() - 1] = updatedServer;
+        this.server.updateServing();
         return null;
     }
 

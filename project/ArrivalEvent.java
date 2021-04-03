@@ -29,15 +29,11 @@ class ArrivalEvent extends Event {
             return doLeaveEvent();
         } else if (server.isNotServingAndWaiting()) {
             ServeEvent serveEvent = doServeEvent(server);
-            Server updatedServer = server.setServing(serveEvent);
-            servers[updatedServer.getID() - 1] = updatedServer;
-            serveEvent = doServeEvent(updatedServer);
+            server.setServing(serveEvent);
             return serveEvent;
         } else if (server.isNotWaiting()) {
             WaitEvent waitEvent = doWaitEvent(server);
-            Server updatedServer = server.setWaiting(waitEvent);
-            servers[updatedServer.getID() - 1] = updatedServer;
-            waitEvent = doWaitEvent(updatedServer);
+            server.setWaiting(waitEvent);
             return waitEvent;
         }
         return null;
