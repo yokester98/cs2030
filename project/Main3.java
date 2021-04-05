@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 
-class Main2 {
+class Main3 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -20,7 +20,8 @@ class Main2 {
             custCount++;
             double arrivalTime = sc.nextDouble();
             double serviceTime = sc.nextDouble();
-            customersList.add(new Customer(custCount, arrivalTime, serviceTime));
+            boolean greedy = sc.nextBoolean();
+            customersList.add(new Customer(custCount, arrivalTime, serviceTime, greedy));
         }
 
         EventRunner eventRunner = new EventRunner(servers, customersList);
