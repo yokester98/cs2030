@@ -18,6 +18,16 @@ class EventRunner {
         }
     }
 
+    Server getServerWithShortestQ(Server[] servers) {
+        Server shortestQ = servers[0];
+        for (Server server : servers) {
+            if (server.getWaitingRemainingCap() > shortestQ.getWaitingRemainingCap()) {
+                shortestQ = server;
+            }
+        }
+        return shortestQ;
+    }
+
     void run() {
         double prevEventTime = 0.0;
 
@@ -44,14 +54,24 @@ class EventRunner {
 
                 // If no idle servers, check for servers with empty queue
                 if (!served) {
-                    for (Server server : servers) {
-                        if (server.isNotWaiting()) {
+                    if (customer.getGreedy()) {
+                        if (this.getServerWithShortestQ(servers).isNotWaiting()) {
                             customer.setState(State.WAITS);
                             // Create a new WAITS event
-                            Event waitsEvent = new Event(customer, customer.getTime(), server);
+                            Event waitsEvent = new Event(customer, customer.getTime(), this.getServerWithShortestQ(servers));
                             served = true;
                             this.PQ.add(waitsEvent);
-                            break;
+                        }
+                    } else {
+                        for (Server server : servers) {
+                            if (server.isNotWaiting()) {
+                                customer.setState(State.WAITS);
+                                // Create a new WAITS event
+                                Event waitsEvent = new Event(customer, customer.getTime(), server);
+                                served = true;
+                                this.PQ.add(waitsEvent);
+                                break;
+                            }
                         }
                     }
                 }
@@ -68,8 +88,15 @@ class EventRunner {
                 customer.setState(State.SERVES);
                 Server server = event.getServer();
                 server.addWaiting(customer);
+                double additionalTime = 0.0;
+                for (Customer queueCustomer : server.getQueue()) {
+                    if (queueCustomer == customer) {
+                        break;
+                    }
+                    additionalTime += queueCustomer.getServiceTime();
+                }
                 // Create a new SERVES event
-                Event servesEvent = new Event(customer, server.getNextFreeTime(), server); 
+                Event servesEvent = new Event(customer, server.getNextFreeTime() + additionalTime, server); 
                 this.PQ.add(servesEvent);
             } else if (customer.getState() == State.SERVES) {
                 customer.setState(State.DONE);

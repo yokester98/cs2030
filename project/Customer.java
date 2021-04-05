@@ -45,12 +45,16 @@ class Customer {
         return this.states[0];
     }
 
+    boolean getGreedy() {
+        return this.greedy;
+    }
+
     void setState(State state) {
         this.states[0] = state;
     }
 
     public String toString() {
-        if (greedy) {
+        if (this.greedy) {
             return String.format("%d(greedy) %s", this.id, this.states[0].toString());
         } else {
             return String.format("%d %s", this.id, this.states[0].toString());
