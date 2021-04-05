@@ -1,5 +1,6 @@
 import java.util.Scanner;
-import java.util.PriorityQueue;
+import java.util.List;
+import java.util.ArrayList;
 
 class Main1 {
     public static void main(String[] args) {
@@ -8,34 +9,19 @@ class Main1 {
         int numOfServers = sc.nextInt();
         Server[] servers = new Server[numOfServers];
         for (int i = 0; i < numOfServers; i++) {
-            Event[] events = new Event[1];
-            servers[i] = new Server(i + 1, events);
-        }
-
-        PriorityQueue<Event> PQ = new PriorityQueue<>(new EventComp());        
+            Customer[] customersInstant = new Customer[1];
+            servers[i] = new Server(i + 1, customersInstant);
+        }       
 
         int custCount = 0;
+        List<Customer> customersList = new ArrayList<Customer>();
         while (sc.hasNextDouble()) {
             custCount++;
             double arrivalTime = sc.nextDouble();
-            Customer newCustomer = new Customer(custCount, arrivalTime);
-            ArrivalEvent newEvent = new ArrivalEvent(newCustomer, arrivalTime);
-            PQ.add(newEvent);
+            customersList.add(new Customer(custCount, arrivalTime));
         }
 
-        Stats stats = new Stats(0, 0, 0);
-
-        while (PQ.peek() != null) {
-            Event event = PQ.poll();
-            System.out.println(event.toString());
-            event = event.nextEvent(servers);
-            // Server server = servers[0];
-            // System.out.println(server.getQueue().peek());
-            if (event != null) {
-                stats = event.updateStats(stats);
-                PQ.add(event);
-            }
-        }
-        System.out.println(stats.toString());
+        EventRunner eventRunner = new EventRunner(servers, customersList);
+        eventRunner.run();
     }
 }

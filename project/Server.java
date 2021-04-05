@@ -3,34 +3,41 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 class Server {
     private final int id;
-    private final Event[] servingEvent;
-    private final ArrayBlockingQueue<Event> queue;
+    private final Customer[] servingCustomer;
+    private final ArrayBlockingQueue<Customer> queue;
+    private final double[] freeTime;
 
-    Server(int id, Event[] servingEvent) {
+    Server(int id, Customer[] servingCustomer) {
         this.id = id;
-        this.servingEvent = servingEvent;
-        this.queue = new ArrayBlockingQueue<Event>(1);
+        this.servingCustomer = servingCustomer;
+        this.queue = new ArrayBlockingQueue<Customer>(1);
+        this.freeTime = new double[]{0.0};
     }
 
-    Server(int id, Event[] servingEvent, int queueLength) {
+    Server(int id, Customer[] servingCustomer, int queueLength) {
         this.id = id;
-        this.servingEvent = servingEvent;
-        this.queue = new ArrayBlockingQueue<Event>(queueLength);
+        this.servingCustomer = servingCustomer;
+        this.queue = new ArrayBlockingQueue<Customer>(queueLength);
+        this.freeTime = new double[]{0.0};
     }
 
     int getID() {
         return this.id;
     }
 
-    Event getServing() {
-        return this.servingEvent[0];
+    double[] getFreeTime() {
+        return this.freeTime;
     }
 
-    ArrayBlockingQueue<Event> getQueue() {
+    Customer getServing() {
+        return this.servingCustomer[0];
+    }
+
+    ArrayBlockingQueue<Customer> getQueue() {
         return this.queue;
     }
 
-    Event getWaiting() {
+    Customer getWaiting() {
         return this.getQueue().peek();
     }
 
@@ -38,16 +45,21 @@ class Server {
         return this.getQueue().remainingCapacity();
     }
 
-    void setServing(Event event) {
-        this.servingEvent[0] = event;
+    void setServing(Customer customer) {
+        this.servingCustomer[0] = customer;
     }
 
-    Event removeWaiting() {
+    void setServing(Customer customer, double eventTime) {
+        this.servingCustomer[0] = customer;
+        this.freeTime[0] = eventTime + customer.getServiceTime();
+    }
+
+    Customer removeWaiting() {
         return this.getQueue().poll();
     }
 
-    void addWaiting(Event event) {
-        this.getQueue().add(event);
+    void addWaiting(Customer customer) {
+        this.getQueue().add(customer);
     }
 
     boolean isNotServingAndWaiting() {
@@ -67,7 +79,7 @@ class Server {
         }
     }
 
-    public double getNextTime() {
-        return this.getServing().getTime();
+    double getNextFreeTime() {
+        return this.freeTime[0];
     }
 }
