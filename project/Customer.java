@@ -4,6 +4,7 @@ class Customer {
     private final double serviceTime;
     private final State[] states;
     private final boolean greedy;
+    private final double[] doneTime;
 
     Customer(int id, double time) {
         this.id = id;
@@ -11,6 +12,7 @@ class Customer {
         this.serviceTime = 1.0;
         this.states = new State[]{State.ARRIVES};
         this.greedy = false;
+        this.doneTime = new double[]{0.0};
     }
 
     Customer(int id, double time, double serviceTime) {
@@ -19,6 +21,7 @@ class Customer {
         this.serviceTime = serviceTime;
         this.states = new State[]{State.ARRIVES};
         this.greedy = false;
+        this.doneTime = new double[]{0.0};
     }
 
     Customer(int id, double time, double serviceTime, boolean greedy) {
@@ -27,6 +30,7 @@ class Customer {
         this.serviceTime = serviceTime;
         this.states = new State[]{State.ARRIVES};
         this.greedy = greedy;
+        this.doneTime = new double[]{0.0};
     }
 
     int getID() {
@@ -49,8 +53,16 @@ class Customer {
         return this.greedy;
     }
 
+    double getDoneTime() {
+        return this.doneTime[0];
+    }
+
     void setState(State state) {
         this.states[0] = state;
+    }
+
+    void setDoneTime(double eventTime) {
+        this.doneTime[0] = eventTime + this.serviceTime;
     }
 
     public String toString() {
