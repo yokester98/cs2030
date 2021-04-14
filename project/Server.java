@@ -63,6 +63,14 @@ class Server {
         this.servingCustomer[0] = customer;
     }
 
+    void updateFreeTime(double eventTime) {
+        this.freeTime[0] = eventTime;
+    }
+
+    void updateFreeTime(double eventTime, double restTime) {
+        this.freeTime[0] = eventTime + restTime;
+    }
+
     void updateFreeTime(double eventTime, double restTime, double serviceTime) {
         this.freeTime[0] = eventTime + restTime + serviceTime;
     }
