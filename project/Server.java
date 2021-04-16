@@ -100,7 +100,7 @@ class Server {
             this.setServing(null);
         }
         if (this.getWaitingRemainingCap() != 0) {
-            this.setServing(this.removeWaiting());
+            this.setServing(this.getWaiting());
         }
     }
 
