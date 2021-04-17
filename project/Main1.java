@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import cs2030.simulator.*;
 
 class Main1 {
     public static void main(String[] args) {

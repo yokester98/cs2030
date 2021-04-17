@@ -3,7 +3,7 @@ package cs2030.simulator;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-class Server {
+public class Server {
     private final int id;
     private final Customer[] servingCustomer;
     private final ArrayBlockingQueue<Customer> queue;
@@ -11,7 +11,7 @@ class Server {
     private final boolean[] resting;
     private final double[] doneTime;
 
-    Server(int id, Customer[] servingCustomer) {
+    public Server(int id, Customer[] servingCustomer) {
         this.id = id;
         this.servingCustomer = servingCustomer;
         this.queue = new ArrayBlockingQueue<Customer>(1);
@@ -20,7 +20,7 @@ class Server {
         this.doneTime = new double[]{0.0};
     }
 
-    Server(int id, Customer[] servingCustomer, int queueLength) {
+    public Server(int id, Customer[] servingCustomer, int queueLength) {
         this.id = id;
         this.servingCustomer = servingCustomer;
         this.queue = new ArrayBlockingQueue<Customer>(queueLength);
@@ -29,75 +29,75 @@ class Server {
         this.doneTime = new double[]{0.0};
     }
 
-    int getID() {
+    public int getID() {
         return this.id;
     }
 
-    Customer getServing() {
+    public Customer getServing() {
         return this.servingCustomer[0];
     }
 
-    ArrayBlockingQueue<Customer> getQueue() {
+    public ArrayBlockingQueue<Customer> getQueue() {
         return this.queue;
     }
 
-    Customer getWaiting() {
+    public Customer getWaiting() {
         return this.getQueue().peek();
     }
 
-    int getWaitingRemainingCap() {
+    public int getWaitingRemainingCap() {
         return this.getQueue().remainingCapacity();
     }
 
-    boolean isResting() {
+    public boolean isResting() {
         return this.resting[0];
     }
 
-    double getDoneTime() {
+    public double getDoneTime() {
         return this.doneTime[0];
     }
 
-    void setRestingStatus(boolean bool) {
+    public void setRestingStatus(boolean bool) {
         this.resting[0] = bool;
     }
 
-    void setServing(Customer customer) {
+    public void setServing(Customer customer) {
         this.servingCustomer[0] = customer;
     }
 
-    void updateFreeTime(double eventTime) {
+    public void updateFreeTime(double eventTime) {
         this.freeTime[0] = eventTime;
     }
 
-    void updateFreeTime(double eventTime, double restTime) {
+    public void updateFreeTime(double eventTime, double restTime) {
         this.freeTime[0] = eventTime + restTime;
     }
 
-    void updateFreeTime(double eventTime, double restTime, double serviceTime) {
+    public void updateFreeTime(double eventTime, double restTime, double serviceTime) {
         this.freeTime[0] = eventTime + restTime + serviceTime;
     }
 
-    void updateDoneTime(double eventTime, double serviceTime) {
+    public void updateDoneTime(double eventTime, double serviceTime) {
         this.doneTime[0] = eventTime + serviceTime;
     }
 
-    Customer removeWaiting() {
+    public Customer removeWaiting() {
         return this.getQueue().poll();
     }
 
-    void addWaiting(Customer customer) {
+    public void addWaiting(Customer customer) {
         this.getQueue().add(customer);
     }
 
-    boolean isNotServingAndWaiting() {
+    public boolean isNotServingAndWaiting() {
         return (this.getServing() == null && this.getWaitingRemainingCap() != 0);
     }
 
-    boolean isNotWaiting() {
+    public boolean isNotWaiting() {
         return (this.getServing() != null && this.getWaitingRemainingCap() != 0);
     }
 
-    void updateServing() {
+    public void updateServing() {
         if (this.getServing() != null) {
             this.setServing(null);
         }
@@ -106,7 +106,7 @@ class Server {
         }
     }
 
-    double getFreeTime() {
+    public double getFreeTime() {
         return this.freeTime[0];
     }
 }

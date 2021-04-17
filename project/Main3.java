@@ -1,9 +1,6 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import cs2030.simulator.Server;
-import cs2030.simulator.Customer;
-import cs2030.simulator.EventRunner;
 
 class Main3 {
     public static void main(String[] args) {
@@ -24,7 +21,7 @@ class Main3 {
             double arrivalTime = sc.nextDouble();
             double serviceTime = sc.nextDouble();
             boolean greedy = sc.nextBoolean();
-            customersList.add(new Customer(custCount, arrivalTime, serviceTime, greedy));
+            customersList.add(new Customer(custCount, arrivalTime, new double[]{serviceTime}, greedy));
         }
 
         EventRunner eventRunner = new EventRunner(servers, customersList);

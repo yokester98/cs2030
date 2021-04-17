@@ -1,35 +1,35 @@
 package cs2030.simulator;
 
-class Event {
+public class Event {
     private final Customer customer;
     private final double time;
     private final Server server;
 
-    Event(Customer customer, double time) {
+    public Event(Customer customer, double time) {
         this.customer = customer;
         this.time = time;
         this.server = null;
     }
 
-    Event(Customer customer, double time, Server server) {
+    public Event(Customer customer, double time, Server server) {
         this.customer = customer;
         this.time = time;
         this.server = server;
     }
 
-    Server getServer() {
+    public Server getServer() {
         return this.server;
     }
 
-    Customer getCustomer() {
+    public Customer getCustomer() {
         return this.customer;
     }
 
-    int getCustomerID() {
+    public int getCustomerID() {
         return this.customer.getID();
     }
 
-    double getTime() {
+    public double getTime() {
         return this.time;
     }
 
