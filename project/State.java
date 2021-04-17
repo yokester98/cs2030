@@ -1,3 +1,5 @@
+package cs2030.simulator;
+
 enum State {
     ARRIVES, SERVES, WAITS, LEAVES, DONE;
 

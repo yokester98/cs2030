@@ -1,9 +1,6 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import cs2030.simulator.Server;
-import cs2030.simulator.Customer;
-import cs2030.simulator.EventRunner;
 
 class Main4 {
     public static void main(String[] args) {

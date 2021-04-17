@@ -1,3 +1,5 @@
+package cs2030.simulator;
+
 class Event {
     private final Customer customer;
     private final double time;

@@ -1,17 +1,13 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import cs2030.simulator.Server;
-import cs2030.simulator.Customer;
-import cs2030.simulator.EventRunner;
 
-class Main4 {
+class Main3 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         int numOfServers = sc.nextInt();
         int maxQueueLength = sc.nextInt();
-        int numOfCustomers = sc.nextInt();
         Server[] servers = new Server[numOfServers];
         for (int i = 0; i < numOfServers; i++) {
             Customer[] customersInstant = new Customer[1];
@@ -20,21 +16,15 @@ class Main4 {
 
         int custCount = 0;
         List<Customer> customersList = new ArrayList<Customer>();
-        for (int i = 0; i < numOfCustomers; i++) {
+        while (sc.hasNextDouble()) {
             custCount++;
             double arrivalTime = sc.nextDouble();
             double serviceTime = sc.nextDouble();
-            customersList.add(new Customer(custCount, arrivalTime, serviceTime));
+            boolean greedy = sc.nextBoolean();
+            customersList.add(new Customer(custCount, arrivalTime, serviceTime, greedy));
         }
 
-        List<Double> restTimeList = new ArrayList<Double>();
-        restTimeList.add(0.0);
-        for (int i = 0; i < numOfCustomers; i++) {
-            double restTime = sc.nextDouble();
-            restTimeList.add(restTime);
-        }
-
-        EventRunner eventRunner = new EventRunner(servers, customersList, restTimeList);
+        EventRunner eventRunner = new EventRunner(servers, customersList);
         eventRunner.run();
     }
 }

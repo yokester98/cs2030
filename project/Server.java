@@ -1,3 +1,5 @@
+package cs2030.simulator;
+
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 

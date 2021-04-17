@@ -1,3 +1,5 @@
+package cs2030.simulator;
+
 import java.util.Queue;
 import java.util.PriorityQueue;
 import java.util.List;

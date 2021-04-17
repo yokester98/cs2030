@@ -1,3 +1,5 @@
+package cs2030.simulator;
+
 class Customer {
     private final int id;
     private final double time;

@@ -1,3 +1,5 @@
+package cs2030.simulator;
+
 class Stats {
     private final double waitingTime;
     private final int numServed;

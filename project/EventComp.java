@@ -1,3 +1,5 @@
+package cs2030.simulator;
+
 import java.util.Comparator;
 
 class EventComp implements Comparator<Event> {
