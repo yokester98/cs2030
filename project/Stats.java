@@ -5,7 +5,7 @@ class Stats {
     private final int numServed;
     private final int numLeft;
 
-    Stats(double waitingTime, int numServed, int numLeft){
+    Stats(double waitingTime, int numServed, int numLeft) {
         this.waitingTime = waitingTime;
         this.numServed = numServed;
         this.numLeft = numLeft;
@@ -24,7 +24,10 @@ class Stats {
     }
 
     public String toString() {
-        double avgWaitingTime = waitingTime / numServed;
+        double avgWaitingTime = 0.0;
+        if (waitingTime != 0.0) {
+            avgWaitingTime = waitingTime / numServed;
+        }
         return String.format("[%.3f %d %d]", avgWaitingTime, numServed, numLeft);
     }
 }

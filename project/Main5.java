@@ -17,6 +17,7 @@ class Main5 {
         double probRest = sc.nextDouble();
         double probGreed = sc.nextDouble();
 
-        EventRunner.run(numOfServers, maxQueueLength, numOfCustomers, seed, lambda, mu, rho, probRest, probGreed);
+        EventRunner.run(numOfServers, maxQueueLength, numOfCustomers, 
+            seed, lambda, mu, rho, probRest, probGreed);
     }
 }
