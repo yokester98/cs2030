@@ -232,8 +232,7 @@ public class EventRunner {
                     }
                 }
                 if ((Math.abs(server.getFreeTime() - totalServiceTime - event.getTime())
-                    > ZEROVAL) && (server.getFreeTime() != event.getTime()) && 
-                    (server.getFreeTime() >= event.getTime())) {
+                    > ZEROVAL) && (server.getFreeTime() >= event.getTime())) {
                     Event servesEvent = new Event(customer, server.getFreeTime() - totalServiceTime
                         + customer.getServiceTime(), server);
                     customer.setDoneTime(servesEvent.getTime());
