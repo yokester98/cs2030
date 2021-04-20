@@ -28,7 +28,6 @@ class Main4 {
         }
 
         List<Double> restTimeList = new ArrayList<Double>();
-        restTimeList.add(0.0);
         for (int i = 0; i < numOfCustomers; i++) {
             double restTime = sc.nextDouble();
             restTimeList.add(restTime);

@@ -23,8 +23,8 @@ public class EventRunner {
         for (Customer customer : this.customersList) {
             this.priorityQ.add(new Event(customer, customer.getTime()));
         }
-        this.restTimeList = new ArrayList<Double>(this.customersList.size());
-        for (int i = 0; i < this.customersList.size() + 1; i++) {
+        this.restTimeList = new ArrayList<Double>();
+        for (int i = 0; i < this.customersList.size(); i++) {
             this.restTimeList.add(0.0);
         }
     }
@@ -72,8 +72,7 @@ public class EventRunner {
                     }
                 }
                 if ((Math.abs(server.getFreeTime() - totalServiceTime - event.getTime())
-                    > ZEROVAL) && (server.getFreeTime() != event.getTime()) && 
-                    (server.getFreeTime() >= event.getTime())) {
+                    > ZEROVAL) && (server.getFreeTime() > event.getTime())) {
                     Event servesEvent = new Event(customer, server.getFreeTime() - totalServiceTime 
                         + customer.getServiceTime(), server);
                     customer.setDoneTime(servesEvent.getTime());
@@ -160,7 +159,6 @@ public class EventRunner {
                 this.priorityQ.add(doneEvent);
             } else if (customer.getState() == State.DONE) {
                 Server server = event.getServer();
-                restCount++;
                 if (restTimeList.get(restCount) > 0.0) {
                     server.setRestingStatus(true);
                 } else {
@@ -168,6 +166,7 @@ public class EventRunner {
                 }
                 server.updateServing();
                 server.updateFreeTime(event.getTime(), restTimeList.get(restCount));
+                restCount++;
                 this.stats[0] = this.stats[0].increaseNumServed();
             }
         }
@@ -202,7 +201,6 @@ public class EventRunner {
         }
 
         List<Double> restTimeList = new ArrayList<Double>();
-        restTimeList.add(0.0);
 
         for (Customer customer : customersList) {
             priorityQ.add(new Event(customer, customer.getTime()));
@@ -232,7 +230,7 @@ public class EventRunner {
                     }
                 }
                 if ((Math.abs(server.getFreeTime() - totalServiceTime - event.getTime())
-                    > ZEROVAL) && (server.getFreeTime() >= event.getTime())) {
+                    > ZEROVAL) && (server.getFreeTime() > event.getTime())) {
                     Event servesEvent = new Event(customer, server.getFreeTime() - totalServiceTime
                         + customer.getServiceTime(), server);
                     customer.setDoneTime(servesEvent.getTime());
@@ -324,7 +322,6 @@ public class EventRunner {
                 } else {
                     restTimeList.add(0.0);
                 }
-                restCount++;
                 if (restTimeList.get(restCount) > 0.0) {
                     server.setRestingStatus(true);
                 } else {
@@ -332,6 +329,7 @@ public class EventRunner {
                 }
                 server.updateServing();
                 server.updateFreeTime(event.getTime(), restTimeList.get(restCount));
+                restCount++;
                 stats[0] = stats[0].increaseNumServed();
             }
         }
