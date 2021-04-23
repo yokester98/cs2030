@@ -1,0 +1,3 @@
+class oop-b {
+    
+}
