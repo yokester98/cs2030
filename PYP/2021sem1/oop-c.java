@@ -1,16 +1,17 @@
-class A<T> {
+class C<T> {
     private final T other;
 
-    A() {
+    C() {
         this.other = null;
     }
 
-    A(T newOther) {
+    C(T newOther) {
         this.other = newOther;
     }
 
-    A set(T other) {
-        return new A(other);
+    @SuppressWarnings("unchecked")
+    C set(T other) {
+        return new C(other);
     }
 
     T get() {
